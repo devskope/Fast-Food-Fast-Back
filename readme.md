@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/ope-oguntoye/Fast-Food-Fast-Back.svg?branch=setup)](https://travis-ci.org/ope-oguntoye/Fast-Food-Fast-Back)  &nbsp; &nbsp; &nbsp;    [![codecov](https://codecov.io/gh/ope-oguntoye/Fast-Food-Fast-Back/branch/setup/graph/badge.svg)](https://codecov.io/gh/ope-oguntoye/Fast-Food-Fast-Back)
+[![Build Status](https://travis-ci.org/ope-oguntoye/Fast-Food-Fast-Back.svg?branch=develop)](https://travis-ci.org/ope-oguntoye/Fast-Food-Fast-Back)  &nbsp; &nbsp; &nbsp;    [![codecov](https://codecov.io/gh/ope-oguntoye/Fast-Food-Fast-Back/branch/develop/graph/badge.svg)](https://codecov.io/gh/ope-oguntoye/Fast-Food-Fast-Back)
 
 
-## Fast-Food-Fast-Back
+## Fast-Food-Fast-Back 
 Back-end app exposing API endpoints  to Fast-Food-Fast front-end clients
 
 
