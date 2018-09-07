@@ -9,6 +9,6 @@ export class UserStore extends Array {
   }
 }
 
-const users = new UserStore();
+export const users = new UserStore();
 
-export default users;
+export const user = { anonymous: true };
