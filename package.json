@@ -38,7 +38,7 @@
     "devstart": "nodemon src/server --exec babel-node",
     "start": "node dist/server",
     "precommit": "lint-staged",
-    "test": "nyc --reporter=lcov --reporter=text mocha test/*.js --exit"
+    "test": "nyc --reporter=lcov --reporter=text mocha --recursive test/*.js --exit"
   },
   "nyc": {
     "require": [
