@@ -2,6 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 import server from '../src/server';
+import { users } from '../src/datastores/userData';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -10,7 +11,7 @@ const ROOT_URL = `/api/v1`;
 
 describe('Users', () => {
   const newUser = {
-    username: `mR m`,
+    username: `martin-Skope`,
     password: `blabla`,
     email: `nyet@pillow.me`
   };
