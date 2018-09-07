@@ -3,7 +3,6 @@ import chaiHttp from 'chai-http';
 
 import server from '../src/server';
 import { users } from '../src/datastores/userData';
-import orders from '../src/datastores/orderData';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -37,7 +36,6 @@ describe('app flow', () => {
 
 
   */
-
   describe('register -> login -> order', () => {
     const newUser = {
       username: `martin-Skope`,
