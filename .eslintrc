@@ -17,8 +17,10 @@
         "error", {
            "devDependencies": true
         }
-    ],
-      "no-console": "error",
+      ],
+      "array-callback-return": 0,
+      "import/prefer-default-export": 0,
+      "no-console": 0,
       "prettier/prettier":[  
         "error",
         {  
