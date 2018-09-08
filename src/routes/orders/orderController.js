@@ -2,6 +2,7 @@ import Order from '../../models/orders';
 import orders from '../../datastores/orderData';
 import checkRequired from '../../helpers/order_field_helpers';
 
+const findByID = id => orders.findByProp(id);
 const createOrder = (req, res) => {
   const { category, name, qty, ...extras } = req.body;
 
@@ -33,4 +34,16 @@ const getOrders = (req, res) => {
   }
 };
 
-export default { createOrder, getOrders };
+const getSingleOrder = (req, res) => {
+  const { id } = req.params;
+
+  if (findByID(id)) {
+    res.status(200).json({
+      success: true,
+      message: `order found`,
+      data: findByID(id)
+    });
+  }
+};
+
+export default { createOrder, getOrders, getSingleOrder };
