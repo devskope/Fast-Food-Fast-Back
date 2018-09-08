@@ -33,4 +33,21 @@ const getOrders = (req, res) => {
   }
 };
 
-export default { createOrder, getOrders };
+const getSingleOrder = (req, res) => {
+  const { id } = req.params;
+
+  if (orders.findById(id)) {
+    res.status(200).json({
+      success: true,
+      message: `order found`,
+      data: orders.findById(id)
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: `no order found`
+    });
+  }
+};
+
+export default { createOrder, getOrders, getSingleOrder };
