@@ -6,6 +6,9 @@ const router = express.Router();
 
 router.get('/:id', loginRequired, controllers.getSingleOrder);
 router.get('/', loginRequired, controllers.getOrders);
+
 router.post('/', loginRequired, controllers.createOrder);
+
+router.put('/:id', loginRequired, controllers.updateOrder);
 
 export default router;
