@@ -1,6 +1,6 @@
 class OrderStore extends Array {
-  findById(id) {
-    return this.find(x => x.id === id);
+  findByProp(prop) {
+    return this.find(x => x[prop] === prop);
   }
 
   add(newOrder) {
