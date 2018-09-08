@@ -1,9 +1,7 @@
 import Order from '../../models/orders';
+import orders from '../../datastores/orderData';
 import checkRequired from '../../helpers/order_field_helpers';
 
-/*
- * TODO: createOrder should return price in res
- */
 const createOrder = (req, res) => {
   const { category, name, qty, ...extras } = req.body;
 
@@ -19,4 +17,20 @@ const createOrder = (req, res) => {
   });
 };
 
-export default { createOrder };
+const getOrders = (req, res) => {
+  if (orders.length === 0) {
+    res.status(200).json({
+      success: true,
+      message: `no orders created yet`,
+      data: []
+    });
+  } else {
+    res.status(200).json({
+      success: true,
+      message: `fetched order list successfully`,
+      data: orders
+    });
+  }
+};
+
+export default { createOrder, getOrders };
