@@ -4,8 +4,8 @@ import loginRequired from '../../middlewares/auth/loginRequired';
 
 const router = express.Router();
 
-router.post('/', loginRequired, controllers.createOrder);
+router.get('/:id', loginRequired, controllers.getSingleOrder);
 router.get('/', loginRequired, controllers.getOrders);
-router.get('/id/:id', loginRequired, controllers.getSingleOrder);
+router.post('/', loginRequired, controllers.createOrder);
 
 export default router;

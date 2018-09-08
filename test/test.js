@@ -128,7 +128,7 @@ describe('Activity flow:', () => {
 
       chai
         .request(server)
-        .get(`${ROOT_URL}/orders/id/${id}`)
+        .get(`${ROOT_URL}/orders/${id}`)
         .end((err, res) => {
           expect(res.status).eq(200);
           expect(res.body.message).eq(`order found`);
@@ -142,7 +142,7 @@ describe('Activity flow:', () => {
 
       chai
         .request(server)
-        .get(`${ROOT_URL}/orders/id/${id}`)
+        .get(`${ROOT_URL}/orders/${id}`)
         .end((err, res) => {
           expect(res.status).eq(404);
           expect(res.body.message).eq(`no order found`);
