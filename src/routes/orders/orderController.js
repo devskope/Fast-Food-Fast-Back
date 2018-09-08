@@ -50,4 +50,32 @@ const getSingleOrder = (req, res) => {
   }
 };
 
-export default { createOrder, getOrders, getSingleOrder };
+const updateOrder = (req, res) => {
+  const { status } = req.body;
+  const { id } = req.params;
+
+  const orderStates = ['completed', 'confirmed', 'declined'];
+
+  const orderToUpdate = orders.findById(id);
+
+  if (!orderStates.includes(status)) {
+    res.status(500).json({
+      success: false,
+      message: `cannot parse invalid status "${status}" `
+    });
+  } else if (orderToUpdate) {
+    orderToUpdate.status = status;
+    res.status(200).json({
+      success: true,
+      message: `order #${id} has been marked as ${status}`,
+      data: orderToUpdate
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: `order #${id} not found`
+    });
+  }
+};
+
+export default { createOrder, getOrders, getSingleOrder, updateOrder };
