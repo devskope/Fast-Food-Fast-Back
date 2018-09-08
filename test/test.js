@@ -149,4 +149,40 @@ describe('Activity flow:', () => {
         });
     });
   });
+
+  describe('Order states', () => {
+    it('orders should be pending by default', () => {
+      expect(orders.findById(1).status).eq('pending');
+    });
+
+    it('order states can be successfully mutated correctly', () => {
+      const id = 1;
+
+      ['completed', 'confirmed', 'declined'].map(x => {
+        chai
+          .request(server)
+          .put(`${ROOT_URL}/orders/${id}`)
+          .send({ status: x })
+          .end((err, res) => {
+            expect(res.status).eq(200);
+            expect(res.body.message).eq(`order #${id} has been marked as ${x}`);
+          });
+      });
+    });
+
+    it('order states should not be incorrectly mutated', () => {
+      const id = 1;
+
+      ['complete', 'confirm', 'decline'].map(x => {
+        chai
+          .request(server)
+          .put(`${ROOT_URL}/orders/${id}`)
+          .send({ status: x })
+          .end((err, res) => {
+            expect(res.status).eq(500);
+            expect(res.body.message).eq(`cannot parse invalid status "${x}" `);
+          });
+      });
+    });
+  });
 });
