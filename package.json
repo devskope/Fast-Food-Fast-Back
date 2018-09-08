@@ -45,6 +45,9 @@
       "babel-core/register"
     ]
   },
+  "engines": {
+    "node": "8.11.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ope-oguntoye/Fast-Food-Fast-Back.git"
