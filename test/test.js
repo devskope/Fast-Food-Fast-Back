@@ -2,6 +2,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 import server from '../src/server';
+import Order from '../src/models/orders';
 import { users } from '../src/datastores/userData';
 import orders from '../src/datastores/orderData';
 
@@ -16,9 +17,15 @@ const orderToMake = {
   category: 'pizza'
 };
 
-describe('app flow', () => {
+const spoofOrders = () => {
+  new Order(orderToMake).save();
+  new Order(orderToMake).save();
+  new Order(orderToMake).save();
+};
+
+describe('Activity flow:', () => {
   describe('unregistered', () => {
-    it('annon user cannot make orders', () => {
+    it('annon user must not make orders', () => {
       chai
         .request(server)
         .post(`${ROOT_URL}/orders`)
@@ -32,7 +39,7 @@ describe('app flow', () => {
         });
     });
 
-    it('annon user cannot fetch orders', () => {
+    it('annon user must not fetch orders', () => {
       chai
         .request(server)
         .get(`${ROOT_URL}/orders`)
@@ -48,7 +55,9 @@ describe('app flow', () => {
 
   /* 
 
+
   */
+
   describe('register -> login -> order', () => {
     const newUser = {
       username: `martin-Skope`,
@@ -113,16 +122,30 @@ describe('app flow', () => {
     });
 
     it('logged in user can fetch specific order', () => {
-      orders.add(orderToMake);
+      spoofOrders();
+
+      const id = 3;
+
       chai
         .request(server)
-        .get(`${ROOT_URL}/orders/1`)
+        .get(`${ROOT_URL}/orders/id/${id}`)
         .end((err, res) => {
           expect(res.status).eq(200);
           expect(res.body.message).eq(`order found`);
           expect(typeof res.body.data).eq('object');
-          expect(res.body.data.id).eq(1);
-          expect(orders.length).eq(2);
+          expect(res.body.data.id).eq(id);
+        });
+    });
+
+    it('logged in user should not fetch non-existent order', () => {
+      const id = 32;
+
+      chai
+        .request(server)
+        .get(`${ROOT_URL}/orders/id/${id}`)
+        .end((err, res) => {
+          expect(res.status).eq(404);
+          expect(res.body.message).eq(`no order found`);
         });
     });
   });
