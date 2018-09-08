@@ -1,5 +1,5 @@
 import userRouter from './users/index';
-import orderRouter from './oders/index';
+import orderRouter from './orders/index';
 
 export const ROOT_URL = `/api/v1`;
 
