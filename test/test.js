@@ -3,6 +3,7 @@ import chaiHttp from 'chai-http';
 
 import server from '../src/server';
 import { users } from '../src/datastores/userData';
+import orders from '../src/datastores/orderData';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -22,6 +23,19 @@ describe('app flow', () => {
         .request(server)
         .post(`${ROOT_URL}/orders`)
         .send(orderToMake)
+        .end((err, res) => {
+          expect(res.status).eq(401);
+          expect(res.body.success).eq(false);
+          expect(res.body.message).eq(
+            `you must be logged in to access the requested resource`
+          );
+        });
+    });
+
+    it('annon user cannot fetch orders', () => {
+      chai
+        .request(server)
+        .get(`${ROOT_URL}/orders`)
         .end((err, res) => {
           expect(res.status).eq(401);
           expect(res.body.success).eq(false);
@@ -77,6 +91,23 @@ describe('app flow', () => {
         .end((err, res) => {
           expect(res.status).eq(201);
           expect(res.body.message).eq(`Order created successfully`);
+          expect(typeof res.body.data).eq('object');
+        });
+    });
+
+    it('Should save order to datastore', () => {
+      Object.keys(orderToMake).map(OrderProp => {
+        expect(orders.findByProp(OrderProp)).eq(orderToMake.OrderProp);
+      });
+    });
+
+    it('logged in user can fetch orders', () => {
+      chai
+        .request(server)
+        .get(`${ROOT_URL}/orders`)
+        .end((err, res) => {
+          expect(res.status).eq(200);
+          expect(res.body.message).eq(`fetched order list successfully`);
           expect(typeof res.body.data).eq('object');
         });
     });
