@@ -111,5 +111,19 @@ describe('app flow', () => {
           expect(typeof res.body.data).eq('object');
         });
     });
+
+    it('logged in user can fetch specific order', () => {
+      orders.add(orderToMake);
+      chai
+        .request(server)
+        .get(`${ROOT_URL}/orders/1`)
+        .end((err, res) => {
+          expect(res.status).eq(200);
+          expect(res.body.message).eq(`order found`);
+          expect(typeof res.body.data).eq('object');
+          expect(res.body.data.id).eq(1);
+          expect(orders.length).eq(2);
+        });
+    });
   });
 });
