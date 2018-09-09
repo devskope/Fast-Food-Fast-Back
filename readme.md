@@ -4,7 +4,7 @@
 ## Fast-Food-Fast-Back 
 Back-end app exposing API endpoints  to Fast-Food-Fast front-end clients
 
-##  [>> documentation  <<](https://fast-food-fast-server.herokuapp.com/api/)
+##  [>> documentation  <<](https://github.com/ope-oguntoye/Fast-Food-Fast-Back/tree/develop/docs/doc.md)
 
 # Description
 
