@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import User from '../../models/users';
 import { user, users } from '../../datastores/userData';
 
@@ -32,7 +33,27 @@ const createUser = (req, res) => {
   };
 
   const newUser = new User(userToCreate);
-  newUser.save();
+
+  bcrypt.genSalt(10, (gErr, salt) => {
+    if (gErr) {
+      res.status(500).json({
+        success: true,
+        message: `An unexpected error occured, please try again`
+      });
+    } else {
+      bcrypt.hash(newUser.password, salt, (hErr, hash) => {
+        if (hErr) {
+          res.status(500).json({
+            success: true,
+            message: `An unexpected error occured, please try again`
+          });
+        } else {
+          newUser.password = hash;
+          newUser.save();
+        }
+      });
+    }
+  });
 
   res.status(201).json({
     success: true,
@@ -56,7 +77,7 @@ const userLogin = (req, res) => {
   } else {
     const match = findUser(req.body.username);
 
-    if (match.password === req.body.password) {
+    if (bcrypt.compare(req.body.password, match.password)) {
       user.details = { ...match };
       user.anonymous = false;
 
