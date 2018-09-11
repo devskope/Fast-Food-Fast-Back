@@ -80,6 +80,7 @@ const userLogin = (req, res) => {
     if (bcrypt.compare(req.body.password, match.password)) {
       user.details = { ...match };
       user.anonymous = false;
+      delete user.details.password;
 
       res.status(200).json({
         success: true,
