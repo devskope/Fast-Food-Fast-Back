@@ -59,7 +59,7 @@ describe('Activity flow:', () => {
   */
 
   describe('register -> login -> order', () => {
-    const newUser = {
+    const userToAdd = {
       username: `martin-Skope`,
       password: `blabla`,
       email: `nyet@pillow.me`
@@ -69,25 +69,30 @@ describe('Activity flow:', () => {
       chai
         .request(server)
         .post(`${ROOT_URL}/users/register`)
-        .send(newUser)
+        .send(userToAdd)
         .end((err, res) => {
           expect(res.status).eq(201);
         });
     });
 
     it('Should save user to datastore', () => {
-      expect(Boolean(users.findByUsername(newUser.username))).eq(true);
+      expect(Boolean(users.findByUsername(userToAdd.username))).eq(true);
+    });
+
+    it('User password should be obfuscated', () => {
+      const userPass = users.findByUsername(userToAdd.username).password;
+      expect(userPass).not.eq(userToAdd.password);
     });
 
     it('Registered user can login', () => {
       chai
         .request(server)
         .post(`${ROOT_URL}/users/login`)
-        .send(newUser)
+        .send(userToAdd)
         .end((err, res) => {
           expect(res.status).eq(200);
           expect(res.body.message).eq(
-            `successful login as ${newUser.username}`
+            `successful login as ${userToAdd.username}`
           );
         });
     });
