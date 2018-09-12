@@ -7,7 +7,7 @@ const createOrder = (req, res) => {
 
   checkRequired(req, res);
 
-  const newOrder = new Order({ category, name, qty, extras });
+  const newOrder = new Order({ category, name, qty, ...extras });
   newOrder.save();
 
   res.status(201).json({
