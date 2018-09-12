@@ -1,5 +1,6 @@
 import userRouter from './users/index';
 import orderRouter from './orders/index';
+import adminRouter from './admin/index';
 
 export const ROOT_URL = `/api/v1`;
 
@@ -118,7 +119,8 @@ const router = app => {
 - [ ] ...extras</p>
 </pre>
     `);
-});
+  });
+  app.use(`/super`, adminRouter);
 };
 
 export default router;
