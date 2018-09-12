@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 
 import server from '../src/server';
 import Order from '../src/models/orders';
-import { users } from '../src/datastores/userData';
+import { users, user } from '../src/datastores/userData';
 import orders from '../src/datastores/orderData';
 
 const { expect } = chai;
@@ -153,14 +153,90 @@ describe('Activity flow:', () => {
           expect(res.body.message).eq(`no order found`);
         });
     });
+
+    describe('Order states', () => {
+      it('orders should be pending by default', () => {
+        expect(orders.findById(1).status).eq('pending');
+      });
+
+      it('order states cannot be mutated by unprivileged users', () => {
+        const id = 1;
+
+        ['completed', 'confirmed', 'declined'].map(x => {
+          chai
+            .request(server)
+            .put(`${ROOT_URL}/orders/${id}`)
+            .send({ status: x })
+            .end((err, res) => {
+              expect(res.status).eq(403);
+              expect(res.body.message).eq(
+                `you dont have sufficient privileges to access the requested resource`
+              );
+            });
+        });
+      });
+
+      it('order states should not be incorrectly mutated by unprivileged user', () => {
+        const id = 1;
+
+        ['complete', 'confirm', 'decline'].map(x => {
+          chai
+            .request(server)
+            .put(`${ROOT_URL}/orders/${id}`)
+            .send({ status: x })
+            .end((err, res) => {
+              expect(res.status).eq(403);
+              expect(res.body.message).eq(
+                `you dont have sufficient privileges to access the requested resource`
+              );
+            });
+        });
+      });
+
+      it('User cannot access protected logout route', () => {
+        chai
+          .request(server)
+          .get(`/super/logout`)
+          .end((err, res) => {
+            expect(res.status).eq(403);
+            expect(res.body.message).eq(
+              `you dont have sufficient privileges to access the requested resource`
+            );
+          });
+      });
+
+      it('User can logout', () => {
+        chai
+          .request(server)
+          .get(`${ROOT_URL}/users/logout`)
+          .end((err, res) => {
+            expect(res.status).eq(204);
+            expect(user.details).eq(undefined);
+          });
+      });
+    });
   });
 
-  describe('Order states', () => {
-    it('orders should be pending by default', () => {
-      expect(orders.findById(1).status).eq('pending');
+  describe('Admin user', () => {
+    it('Admin exists', () => {
+      expect(Boolean(users.findByProp('isAdmin'))).eq(true);
     });
 
-    it('order states can be successfully mutated correctly', () => {
+    it('Admin can login', () => {
+      chai
+        .request(server)
+        .post(`/super/login`)
+        .send({
+          username: 'admin',
+          password: 'admin'
+        })
+        .end((err, res) => {
+          expect(res.status).eq(200);
+          expect(res.body.message).eq(`successful login as admin user`);
+        });
+    });
+
+    it('order states can be mutated correctly by admin', () => {
       const id = 1;
 
       ['completed', 'confirmed', 'declined'].map(x => {
@@ -175,7 +251,7 @@ describe('Activity flow:', () => {
       });
     });
 
-    it('order states should not be incorrectly mutated', () => {
+    it('order states should not be incorrectly mutated by admin', () => {
       const id = 1;
 
       ['complete', 'confirm', 'decline'].map(x => {
