@@ -105,4 +105,18 @@ const redirectAuthPages = (req, res) => {
   }
 };
 
-export default { createUser, userLogin, redirectAuthPages };
+const userLogout = (req, res) => {
+  if (!req.user.anonymous) {
+    delete user.details;
+    user.anonymous = true;
+    console.log(user);
+    res.status(204).end();
+  } else {
+    res.status(200).json({
+      success: true,
+      message: `not logged in`
+    });
+  }
+};
+
+export default { createUser, userLogin, redirectAuthPages, userLogout };
