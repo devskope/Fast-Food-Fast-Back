@@ -27,7 +27,7 @@ const loginAdmin = (req, res) => {
 
       res.status(200).json({
         success: true,
-        message: `succesful login as admin user`,
+        message: `successful login as admin user`,
         user
       });
     }
