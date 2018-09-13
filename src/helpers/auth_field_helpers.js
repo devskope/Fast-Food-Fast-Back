@@ -1,15 +1,9 @@
-export default (req, res) => {
-  if (req.body.username === undefined) {
-    res.status(400).json({
-      success: false,
-      message: `misssing required username field`
-    });
-  }
-
-  if (req.body.password === undefined) {
-    res.status(400).json({
-      success: false,
-      message: `misssing required password field`
-    });
-  }
+export default (req, errors) => {
+  ['username', 'password'].map(field => {
+    if (req.body[field] === undefined) {
+      errors.push({
+        message: `misssing required ${field} field`
+      });
+    }
+  });
 };

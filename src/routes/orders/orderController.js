@@ -4,17 +4,25 @@ import checkRequired from '../../helpers/order_field_helpers';
 
 const createOrder = (req, res) => {
   const { category, name, qty, ...extras } = req.body;
+  const errors = [];
 
-  checkRequired(req, res);
+  checkRequired(req, errors);
 
-  const newOrder = new Order({ category, name, qty, ...extras });
-  newOrder.save();
+  if (errors.length > 0) {
+    res.status(400).json({
+      success: false,
+      errors
+    });
+  } else {
+    const newOrder = new Order({ category, name, qty, ...extras });
+    newOrder.save();
 
-  res.status(201).json({
-    success: true,
-    message: `Order created successfully`,
-    data: newOrder
-  });
+    res.status(201).json({
+      success: true,
+      message: `Order created successfully`,
+      data: newOrder
+    });
+  }
 };
 
 const getOrders = (req, res) => {
