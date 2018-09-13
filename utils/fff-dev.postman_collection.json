@@ -1,0 +1,717 @@
+{
+	"info": {
+		"_postman_id": "4e7fad56-3fb1-4f51-9c8a-3dc523735030",
+		"name": "fff-dev",
+		"description": "Development collection to test fast-food-fast-server api endpoints @ `127.0.0.1:3000`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET API root url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1"
+					]
+				},
+				"description": "Fetch `${ROOT_URL}`"
+			},
+			"response": []
+		},
+		{
+			"name": "GET registration endpoint",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "someuser",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "weaksauce",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/users/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"register"
+					]
+				},
+				"description": "fetch registration endpoint @ `${ROOT_URL}/users/register`"
+			},
+			"response": []
+		},
+		{
+			"name": "Register new user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "someuser",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "weaksauce",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "optional@optional.ru",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/users/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"register"
+					]
+				},
+				"description": "register new user @ `${ROOT_URL}/users/register`"
+			},
+			"response": []
+		},
+		{
+			"name": "GET login",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "someuser",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "weaksauce",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/users/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"login"
+					]
+				},
+				"description": "fetch login page @ `${ROOT_URL}/users/login`"
+			},
+			"response": []
+		},
+		{
+			"name": "Login user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "someuser",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "weaksauce",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/users/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"login"
+					]
+				},
+				"description": "login registered user @ `${ROOT_URL}/users/login`"
+			},
+			"response": []
+		},
+		{
+			"name": "Create order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "category",
+							"value": "pizza",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "deep dish",
+							"type": "text"
+						},
+						{
+							"key": "qty",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "topping",
+							"value": "hagis",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				},
+				"description": "create new order @ `${ROOT_URL}/orders`"
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch order list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "category",
+							"value": "pizza",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "deep dish",
+							"type": "text"
+						},
+						{
+							"key": "qty",
+							"value": "3",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "completed",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				},
+				"description": "fetch list of created orders @ `${ROOT_URL}/orders`"
+			},
+			"response": []
+		},
+		{
+			"name": "GET  single order",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "category",
+							"value": "pizza",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "deep dish",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "qty",
+							"value": "3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "completed",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/orders/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"1"
+					]
+				},
+				"description": "fetch specific order @ `${ROOT_URL}/orders/:orderId`"
+			},
+			"response": []
+		},
+		{
+			"name": "update  single order",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "category",
+							"value": "pizza",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "deep dish",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "qty",
+							"value": "3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "completed",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/orders/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"1"
+					]
+				},
+				"description": "update specific order @ `${ROOT_URL}/orders/:orderId`"
+			},
+			"response": []
+		},
+		{
+			"name": "Logout user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "someuser",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "weaksauce",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/users/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"logout"
+					]
+				},
+				"description": "clears user data from session and logs out @ `${ROOT_URL}/users/logout`"
+			},
+			"response": []
+		},
+		{
+			"name": "Login as admin user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "category",
+							"value": "pizza",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "deep dish",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "qty",
+							"value": "3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "completed",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/super/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"super",
+						"login"
+					]
+				},
+				"description": "logs in su @ `${SITE_ROOT}/super/login`"
+			},
+			"response": []
+		},
+		{
+			"name": "update  single order",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "category",
+							"value": "pizza",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "deep dish",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "qty",
+							"value": "3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "completed",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/v1/orders/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"1"
+					]
+				},
+				"description": "update specific order @ `${ROOT_URL}/orders/:orderId`"
+			},
+			"response": []
+		},
+		{
+			"name": "Logout  admin user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "category",
+							"value": "pizza",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "deep dish",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "qty",
+							"value": "3",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "status",
+							"value": "completed",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/super/logout",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"super",
+						"logout"
+					]
+				},
+				"description": "logs out su @ `${SITE_ROOT}/super/logout`"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5c07c480-0f11-42bc-b117-4580fbd7dc3b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9e46e13b-1e11-4764-8435-08b0f7ca5630",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
