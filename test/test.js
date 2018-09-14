@@ -24,8 +24,8 @@ const spoofOrders = () => {
 };
 
 describe('Activity flow:', () => {
-  describe('unregistered', () => {
-    it('annon user must not make orders', () => {
+  describe('unregistered:', () => {
+    it('Annon user must not make orders', () => {
       chai
         .request(server)
         .post(`${ROOT_URL}/orders`)
@@ -39,7 +39,7 @@ describe('Activity flow:', () => {
         });
     });
 
-    it('annon user must not fetch orders', () => {
+    it('Annon user must not fetch orders', () => {
       chai
         .request(server)
         .get(`${ROOT_URL}/orders`)
@@ -58,46 +58,85 @@ describe('Activity flow:', () => {
 
   */
 
-  describe('register -> login -> order', () => {
-    const userToAdd = {
+  describe('Register -> Login -> Order:', () => {
+    const newUser = {
       username: `martin-Skope`,
       password: `blabla`,
       email: `nyet@pillow.me`
     };
 
+    it('Should not register new user with missing reqirements', () => {
+      ['username', 'password'].map(x => {
+        chai
+          .request(server)
+          .post(`${ROOT_URL}/users/register`)
+          .send(Object.assign({}, newUser, { [x]: undefined }))
+          .end((err, res) => {
+            expect(res.status).eq(400);
+            expect(res.body.errors instanceof Array).eq(true);
+          });
+      });
+    });
+
     it('Should register new user', () => {
       chai
         .request(server)
         .post(`${ROOT_URL}/users/register`)
-        .send(userToAdd)
+        .send(newUser)
         .end((err, res) => {
           expect(res.status).eq(201);
         });
     });
 
     it('Should save user to datastore', () => {
-      expect(Boolean(users.findByUsername(userToAdd.username))).eq(true);
+      expect(Boolean(users.findByUsername(newUser.username))).eq(true);
     });
 
     it('User password should be obfuscated', () => {
-      const userPass = users.findByUsername(userToAdd.username).password;
-      expect(userPass).not.eq(userToAdd.password);
+      const userPass = users.findByUsername(newUser.username).password;
+      expect(userPass).not.eq(newUser.password);
+    });
+
+    it('Registered should not login with missing requirements', () => {
+      ['username', 'password'].map(x => {
+        chai
+          .request(server)
+          .post(`${ROOT_URL}/users/login`)
+          .send(Object.assign({}, newUser, { [x]: undefined }))
+          .end((err, res) => {
+            expect(res.status).eq(400);
+            expect(res.body.errors instanceof Array).eq(true);
+          });
+      });
     });
 
     it('Registered user can login', () => {
       chai
         .request(server)
         .post(`${ROOT_URL}/users/login`)
-        .send(userToAdd)
+        .send(newUser)
         .end((err, res) => {
           expect(res.status).eq(200);
           expect(res.body.message).eq(
-            `successful login as ${userToAdd.username}`
+            `successful login as ${newUser.username}`
           );
         });
     });
 
-    it('logged in user can create an order', () => {
+    it('Logged in user should not create an invalid order', () => {
+      ['category', 'name', 'qty'].map(field => {
+        chai
+          .request(server)
+          .post(`${ROOT_URL}/orders`)
+          .send(Object.assign({}, orderToMake, { [field]: undefined }))
+          .end((err, res) => {
+            expect(res.status).eq(400);
+            expect(res.body.errors instanceof Array).eq(true);
+          });
+      });
+    });
+
+    it('logged in user can create a valid order', () => {
       chai
         .request(server)
         .post(`${ROOT_URL}/orders`)
@@ -154,7 +193,7 @@ describe('Activity flow:', () => {
         });
     });
 
-    describe('Order states', () => {
+    describe('Order states:', () => {
       it('orders should be pending by default', () => {
         expect(orders.findById(1).status).eq('pending');
       });
@@ -192,7 +231,9 @@ describe('Activity flow:', () => {
             });
         });
       });
+    });
 
+    describe('logout', () => {
       it('User cannot access protected logout route', () => {
         chai
           .request(server)
@@ -220,6 +261,30 @@ describe('Activity flow:', () => {
   describe('Admin user', () => {
     it('Admin exists', () => {
       expect(Boolean(users.findByProp('isAdmin'))).eq(true);
+    });
+
+    it('Admin can login', () => {
+      ['username', 'password'].map(x => {
+        chai
+          .request(server)
+          .post(`/super/login`)
+          .send(
+            Object.assign(
+              {},
+              {
+                username: 'admin',
+                password: 'admin'
+              },
+              {
+                [x]: undefined
+              }
+            )
+          )
+          .end((err, res) => {
+            expect(res.status).eq(400);
+            expect(res.body.errors instanceof Array).eq(true);
+          });
+      });
     });
 
     it('Admin can login', () => {

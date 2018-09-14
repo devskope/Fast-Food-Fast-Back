@@ -9,56 +9,63 @@ const userExists = username => Boolean(users.findByUsername(username));
 const findUser = username => users.findByUsername(username);
 
 const createUser = (req, res) => {
+  const errors = [];
+
   if (!req.user.anonymous) {
     res.status(307).json({
       success: true,
       location: `${req.headers.host + ROOT_URL}/menu`,
       message: `already logged in as ${req.user.details.username}`
     });
-  }
+  } else {
+    checkRequired(req, errors);
 
-  checkRequired(req, res);
-
-  if (userExists(req.body.username)) {
-    res.status(409).json({
-      success: false,
-      message: `user '${req.body.username}' already exists`
-    });
-  }
-
-  const userToCreate = {
-    username: req.body.username,
-    password: req.body.password,
-    email: req.body.email || ''
-  };
-
-  const newUser = new User(userToCreate);
-
-  bcrypt.genSalt(10, (gErr, salt) => {
-    if (gErr) {
-      res.status(500).json({
-        success: true,
-        message: `An unexpected error occured, please try again`
+    if (errors.length > 0) {
+      res.status(400).json({
+        success: false,
+        errors
+      });
+    } else if (userExists(req.body.username)) {
+      res.status(409).json({
+        success: false,
+        message: `user '${req.body.username}' already exists`
       });
     } else {
-      bcrypt.hash(newUser.password, salt, (hErr, hash) => {
-        if (hErr) {
+      const userToCreate = {
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email || ''
+      };
+
+      const newUser = new User(userToCreate);
+
+      bcrypt.genSalt(10, (gErr, salt) => {
+        if (gErr) {
           res.status(500).json({
             success: true,
             message: `An unexpected error occured, please try again`
           });
         } else {
-          newUser.password = hash;
-          newUser.save();
+          bcrypt.hash(newUser.password, salt, (hErr, hash) => {
+            if (hErr) {
+              res.status(500).json({
+                success: true,
+                message: `An unexpected error occured, please try again`
+              });
+            } else {
+              newUser.password = hash;
+              newUser.save();
+            }
+          });
         }
       });
-    }
-  });
 
-  res.status(201).json({
-    success: true,
-    message: `user ${newUser.username} registered successfully`
-  });
+      res.status(201).json({
+        success: true,
+        message: `user ${newUser.username} registered successfully`
+      });
+    }
+  }
 };
 
 /* 
@@ -67,26 +74,46 @@ const createUser = (req, res) => {
 */
 
 const userLogin = (req, res) => {
-  checkRequired(req, res);
-
-  if (!userExists(req.body.username)) {
-    res.status(401).json({
-      success: false,
-      message: `user ${req.body.username} not registered`
+  const errors = [];
+  if (!req.user.anonymous) {
+    res.status(307).json({
+      success: true,
+      location: `${req.headers.host + ROOT_URL}/menu`,
+      message: `already logged in as ${req.user.details.username}`
     });
   } else {
-    const match = findUser(req.body.username);
+    checkRequired(req, errors);
 
-    if (bcrypt.compare(req.body.password, match.password)) {
-      user.details = { ...match };
-      user.anonymous = false;
-      delete user.details.password;
-
-      res.status(200).json({
-        success: true,
-        message: `successful login as ${req.user.details.username}`,
-        user
+    if (errors.length > 0) {
+      res.status(400).json({
+        success: false,
+        errors
       });
+    } else if (!userExists(req.body.username)) {
+      res.status(401).json({
+        success: false,
+        message: `user ${req.body.username} not registered`
+      });
+    } else {
+      const match = findUser(req.body.username);
+
+      if (bcrypt.compare(req.body.password, match.password)) {
+        user.details = { ...match };
+        user.anonymous = false;
+        delete user.details.password;
+
+        res.status(200).json({
+          success: true,
+          message: `successful login as ${req.user.details.username}`,
+          user
+        });
+      } else {
+        res.status(400).json({
+          success: true,
+          message: `password incorrect`,
+          user
+        });
+      }
     }
   }
 };

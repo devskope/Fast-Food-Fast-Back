@@ -1,8 +1,7 @@
-export default (req, res) => {
+export default (req, errors) => {
   ['category', 'name', 'qty'].map(field => {
     if (req.body[field] === undefined) {
-      res.status(400).json({
-        success: false,
+      errors.push({
         message: `misssing required "${field}" field`
       });
     }
