@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "4e7fad56-3fb1-4f51-9c8a-3dc523735030",
 		"name": "fff-dev",
-		"description": "Development collection to test fast-food-fast-server api endpoints @ `127.0.0.1:3000`",
+		"description": "Development collection to test fast-food-fast-server api endpoints @ `127.0.0.1:3000`\n\n`SITE_ROOT = 127.0.0.1:3000`\n\n`ROOT_URL = 127.0.0.1:3000/api/v1`",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -35,27 +35,8 @@
 			"name": "GET registration endpoint",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "someuser",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "weaksauce",
-							"type": "text"
-						}
-					]
-				},
+				"header": [],
+				"body": {},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/v1/users/register",
 					"protocol": "http",
@@ -132,27 +113,8 @@
 			"name": "GET login",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "someuser",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "weaksauce",
-							"type": "text"
-						}
-					]
-				},
+				"header": [],
+				"body": {},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/v1/users/login",
 					"protocol": "http",
@@ -280,38 +242,8 @@
 			"name": "Fetch order list",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "category",
-							"value": "pizza",
-							"type": "text"
-						},
-						{
-							"key": "name",
-							"value": "deep dish",
-							"type": "text"
-						},
-						{
-							"key": "qty",
-							"value": "3",
-							"type": "text"
-						},
-						{
-							"key": "status",
-							"value": "completed",
-							"type": "text",
-							"disabled": true
-						}
-					]
-				},
+				"header": [],
+				"body": {},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/v1/orders",
 					"protocol": "http",
@@ -336,40 +268,8 @@
 			"name": "GET  single order",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "category",
-							"value": "pizza",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "name",
-							"value": "deep dish",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "qty",
-							"value": "3",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "status",
-							"value": "completed",
-							"type": "text"
-						}
-					]
-				},
+				"header": [],
+				"body": {},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/v1/orders/1",
 					"protocol": "http",
@@ -405,24 +305,6 @@
 					"mode": "urlencoded",
 					"urlencoded": [
 						{
-							"key": "category",
-							"value": "pizza",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "name",
-							"value": "deep dish",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "qty",
-							"value": "3",
-							"type": "text",
-							"disabled": true
-						},
-						{
 							"key": "status",
 							"value": "completed",
 							"type": "text"
@@ -454,27 +336,8 @@
 			"name": "Logout user",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "username",
-							"value": "someuser",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "weaksauce",
-							"type": "text"
-						}
-					]
-				},
+				"header": [],
+				"body": {},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/v1/users/logout",
 					"protocol": "http",
@@ -509,30 +372,6 @@
 				"body": {
 					"mode": "urlencoded",
 					"urlencoded": [
-						{
-							"key": "category",
-							"value": "pizza",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "name",
-							"value": "deep dish",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "qty",
-							"value": "3",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "status",
-							"value": "completed",
-							"type": "text",
-							"disabled": true
-						},
 						{
 							"key": "username",
 							"value": "admin",
@@ -578,27 +417,21 @@
 					"mode": "urlencoded",
 					"urlencoded": [
 						{
-							"key": "category",
-							"value": "pizza",
-							"type": "text",
-							"disabled": true
+							"key": "status",
+							"value": "completed",
+							"type": "text"
 						},
 						{
-							"key": "name",
-							"value": "deep dish",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "qty",
-							"value": "3",
+							"key": "status",
+							"value": "accepted",
 							"type": "text",
 							"disabled": true
 						},
 						{
 							"key": "status",
-							"value": "completed",
-							"type": "text"
+							"value": "complete",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
@@ -627,51 +460,8 @@
 			"name": "Logout  admin user",
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded"
-					}
-				],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "category",
-							"value": "pizza",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "name",
-							"value": "deep dish",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "qty",
-							"value": "3",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "status",
-							"value": "completed",
-							"type": "text",
-							"disabled": true
-						},
-						{
-							"key": "username",
-							"value": "admin",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "admin",
-							"type": "text"
-						}
-					]
-				},
+				"header": [],
+				"body": {},
 				"url": {
 					"raw": "http://127.0.0.1:3000/super/logout",
 					"protocol": "http",
