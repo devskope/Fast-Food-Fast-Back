@@ -18,7 +18,7 @@ $ npm test // test
 
 To manualy test endpoints in deveplopment with [Postman](https://getpostman.com):
 
-- Import the [postman dev collection](https://github.com/ope-oguntoye/Fast-Food-Fast-Back/tree/develop-patch/utils/fff-dev.postman_collection.json) into postman.
+- Import the [postman dev collection](https://github.com/ope-oguntoye/Fast-Food-Fast-Back/tree/develop/utils/fff-dev.postman_collection.json) into postman.
 - start the development server (_on `port 3000`_)
 - Send requests using postman
 
@@ -57,6 +57,17 @@ To manualy test endpoints in deveplopment with [Postman](https://getpostman.com)
 # SAMPLE REQUESTS
 
  See [postman docs.](https://documenter.getpostman.com/view/5312930/RWaKRTSa)
+ 
+ ## ADMIN 
+
+## _Login:_
+
+```javascript
+{
+  username: ${uname},   //  default: admin
+  password: ${pass}    //  default: admin
+}
+```
 
 ## USER 
 
@@ -85,7 +96,7 @@ To manualy test endpoints in deveplopment with [Postman](https://getpostman.com)
   ...extras            //  obj ex. { topping: 'hotsauce', ...x}
 }
 ```
-## _Updating:_
+## _Updating Orders:_
 
 
 ```javascript
