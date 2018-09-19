@@ -43,7 +43,7 @@ To manualy test endpoints in deveplopment with [Postman](https://getpostman.com)
 |  METHOD  |             ROUTE               |  DESC |
 |  ------  |             -----               |------------ |
 |   POST   |  `${SITE_ROOT}/super/login`   | Login admin|
-|   POST   |  `${SITE_ROOT}/super/logout`   | Logout admin|
+|   GET   |  `${SITE_ROOT}/super/logout`   | Logout admin|
 
 # ORDERS
 |  METHOD  |             ROUTE               |  DESC |
