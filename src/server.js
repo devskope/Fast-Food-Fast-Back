@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import debug from 'debug';
 import morgan from 'morgan';
 import { user } from './datastores/userData';
 import r from './routes/index';
@@ -11,7 +12,7 @@ if (!env.NODE_ENV) {
   dotenv.config();
 }
 
-const port = env.PORT;
+const logger = debug('ff:server');
 
 if (env.NODE_ENV === `production`) {
   app.use(morgan('combined'));
@@ -27,7 +28,6 @@ app.use((req, res, next) => {
   next();
 });
 r(app);
-
-app.listen(port, () => console.log(`running on ${port}`));
+app.listen(env.PORT, () => logger(`Running on ${env.PORT}`));
 
 export default app;

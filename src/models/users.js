@@ -10,18 +10,14 @@ class User {
   save() {
     users.add(this);
   }
-
-  set setPassword(password) {
-    this.password = password;
-  }
-
-  get getUsername() {
-    return this.username;
-  }
-
-  set setUsername(username) {
-    this.username = username;
-  }
 }
+
+const superUser = new User({
+  username: 'admin',
+  password: '$2a$10$4DhhXb8vXCMh/Xf1p3VuzeFdBqzJJkCwwhTXE55PLpYrkeuNQQci6',
+  email: 'max@fff.chow'
+});
+superUser.isAdmin = true;
+superUser.save();
 
 export default User;
