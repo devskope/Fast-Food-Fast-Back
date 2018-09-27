@@ -102,11 +102,19 @@ const userLogin = (req, res) => {
         user.anonymous = false;
         delete user.details.password;
 
-        res.status(200).json({
-          success: true,
-          message: `successful login as ${req.user.details.username}`,
-          user
-        });
+        if (match.isAdmin) {
+          res.status(200).json({
+            success: true,
+            message: `successful login as admin user`,
+            user
+          });
+        } else {
+          res.status(200).json({
+            success: true,
+            message: `successful login as ${req.user.details.username}`,
+            user
+          });
+        }
       } else {
         res.status(400).json({
           success: true,

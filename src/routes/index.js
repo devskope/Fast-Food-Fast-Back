@@ -4,7 +4,6 @@ import { Converter } from 'showdown';
 
 import userRouter from './users/index';
 import orderRouter from './orders/index';
-import adminRouter from './admin/index';
 
 export const ROOT_URL = `/api/v1`;
 
@@ -20,7 +19,6 @@ const router = app => {
       res.status(200).send(converter.makeHtml(data.toString()));
     });
   });
-  app.use(`/super`, adminRouter);
 };
 
 export default router;

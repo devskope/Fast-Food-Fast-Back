@@ -52,12 +52,6 @@ describe('Activity flow:', () => {
         });
     });
   });
-
-  /* 
-
-
-  */
-
   describe('Register -> Login -> Order:', () => {
     const newUser = {
       username: `martin-Skope`,
@@ -234,18 +228,6 @@ describe('Activity flow:', () => {
     });
 
     describe('logout', () => {
-      it('User cannot access protected logout route', () => {
-        chai
-          .request(server)
-          .get(`/super/logout`)
-          .end((err, res) => {
-            expect(res.status).eq(403);
-            expect(res.body.message).eq(
-              `you dont have sufficient privileges to access the requested resource`
-            );
-          });
-      });
-
       it('User can logout', () => {
         chai
           .request(server)
@@ -267,7 +249,7 @@ describe('Activity flow:', () => {
       ['username', 'password'].map(x => {
         chai
           .request(server)
-          .post(`/super/login`)
+          .post(`${ROOT_URL}/users/login`)
           .send(
             Object.assign(
               {},
@@ -290,7 +272,7 @@ describe('Activity flow:', () => {
     it('Admin can login', () => {
       chai
         .request(server)
-        .post(`/super/login`)
+        .post(`${ROOT_URL}/users/login`)
         .send({
           username: 'admin',
           password: 'admin'
