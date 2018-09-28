@@ -3,43 +3,13 @@ import orders from '../../datastores/orderData';
 
 const createOrder = (req, res) => {
   const { category, name, qty, ...extras } = req.body;
-
-  const errors = [];
-  ['category', 'name', 'qty'].map(field => {
-    if (req.body[field] === undefined) {
-      errors.push({
-        category: 'validation',
-        message: `misssing required "${field}" field`
-      });
-    }
+  const newOrder = new Order({ category, name, qty, ...extras });
+  newOrder.save();
+  res.status(201).json({
+    success: true,
+    message: `Order created successfully`,
+    data: newOrder
   });
-  if (typeof JSON.parse(qty) !== 'number') {
-    errors.push({
-      category: 'validation',
-      message: `qty should be a number`
-    });
-  }
-
-  if (errors.length > 0) {
-    res.status(400).json({
-      success: false,
-      errors
-    });
-  } else {
-    const newOrder = new Order({
-      category,
-      name,
-      qty,
-      ...extras
-    });
-    newOrder.save();
-
-    res.status(201).json({
-      success: true,
-      message: `Order created successfully`,
-      data: newOrder
-    });
-  }
 };
 
 const getOrders = (req, res) => {
