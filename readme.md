@@ -25,6 +25,9 @@ Currently, this API provisions the following features:
 
 ## Testing
 * To run the tests, run `npm test`
+An admin account is provided with these default credentials:
+ - username: admin
+ - password: admin
 
 
 ### Dependencies
