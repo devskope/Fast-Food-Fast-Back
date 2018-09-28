@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 
 import server from '../src/server';
 import Order from '../src/models/orders';
-import { users, user } from '../src/datastores/userData';
+import { users } from '../src/datastores/userData';
 import orders from '../src/datastores/orderData';
 
 const { expect } = chai;
@@ -25,7 +25,7 @@ const spoofOrders = () => {
 
 describe('Activity flow:', () => {
   describe('unregistered:', () => {
-    it('Annon user must not make orders', () => {
+    it('Annon user must not make orders', done => {
       chai
         .request(server)
         .post(`${ROOT_URL}/orders`)
@@ -37,9 +37,10 @@ describe('Activity flow:', () => {
             `you must be logged in to access the requested resource`
           );
         });
+      done();
     });
 
-    it('Annon user must not fetch orders', () => {
+    it('Annon user must not fetch orders', done => {
       chai
         .request(server)
         .get(`${ROOT_URL}/orders`)
@@ -50,6 +51,7 @@ describe('Activity flow:', () => {
             `you must be logged in to access the requested resource`
           );
         });
+      done();
     });
   });
   describe('Register -> Login -> Order:', () => {
@@ -59,65 +61,71 @@ describe('Activity flow:', () => {
       email: `nyet@pillow.me`
     };
 
-    it('Should not register new user with missing reqirements', () => {
+    it('Should not register new user with missing reqirements', done => {
       ['username', 'password'].map(x => {
         chai
           .request(server)
-          .post(`${ROOT_URL}/users/register`)
-          .send(Object.assign({}, newUser, { [x]: undefined }))
+          .post(`${ROOT_URL}/auth/signup`)
+          .send({ ...newUser, ...{ [x]: undefined } })
           .end((err, res) => {
             expect(res.status).eq(400);
             expect(res.body.errors instanceof Array).eq(true);
           });
       });
+      done();
     });
-    it('Should not register new user with invalid email', () => {
+    it('Should not register new user with invalid email', done => {
       chai
         .request(server)
-        .post(`${ROOT_URL}/users/register`)
-        .send(Object.assign({}, newUser, { email: 'ropsten.io' }))
+        .post(`${ROOT_URL}/auth/signup`)
+        .send({ ...newUser, ...{ email: 'ropsten.io' } })
         .end((err, res) => {
           expect(res.status).eq(400);
           expect(res.body.errors instanceof Array).eq(true);
         });
+      done();
     });
 
-    it('Should register new user', () => {
+    it('Should register new user', done => {
       chai
         .request(server)
-        .post(`${ROOT_URL}/users/register`)
+        .post(`${ROOT_URL}/auth/signup`)
         .send(newUser)
         .end((err, res) => {
           expect(res.status).eq(201);
         });
+      done();
     });
 
-    it('Should save user to datastore', () => {
+    it('Should save user to datastore', done => {
       expect(Boolean(users.findByUsername(newUser.username))).eq(true);
+      done();
     });
 
-    it('User password should be obfuscated', () => {
+    it('User password should be obfuscated', done => {
       const userPass = users.findByUsername(newUser.username).password;
       expect(userPass).not.eq(newUser.password);
+      done();
     });
 
-    it('Registered should not login with missing requirements', () => {
+    it('Registered should not login with missing requirements', done => {
       ['username', 'password'].map(x => {
         chai
           .request(server)
-          .post(`${ROOT_URL}/users/login`)
-          .send(Object.assign({}, newUser, { [x]: undefined }))
+          .post(`${ROOT_URL}/auth/login`)
+          .send({ ...newUser, ...{ [x]: undefined } })
           .end((err, res) => {
             expect(res.status).eq(400);
             expect(res.body.errors instanceof Array).eq(true);
           });
       });
+      done();
     });
 
-    it('Registered user can login', () => {
+    it('Registered user can login', done => {
       chai
         .request(server)
-        .post(`${ROOT_URL}/users/login`)
+        .post(`${ROOT_URL}/auth/login`)
         .send(newUser)
         .end((err, res) => {
           expect(res.status).eq(200);
@@ -125,9 +133,10 @@ describe('Activity flow:', () => {
             `successful login as ${newUser.username}`
           );
         });
+      done();
     });
 
-    it('logged in user can create a valid order', () => {
+    it('logged in user can create a valid order', done => {
       chai
         .request(server)
         .post(`${ROOT_URL}/orders`)
@@ -137,15 +146,17 @@ describe('Activity flow:', () => {
           expect(res.body.message).eq(`Order created successfully`);
           expect(typeof res.body.data).eq('object');
         });
+      done();
     });
 
-    it('Should save order to datastore', () => {
+    it('Should save order to datastore', done => {
       Object.keys(orderToMake).map(OrderProp => {
         expect(orders.findByProp(OrderProp)).eq(orderToMake.OrderProp);
       });
+      done();
     });
 
-    it('logged in user can fetch orders', () => {
+    it('logged in user can fetch orders', done => {
       chai
         .request(server)
         .get(`${ROOT_URL}/orders`)
@@ -154,9 +165,10 @@ describe('Activity flow:', () => {
           expect(res.body.message).eq(`fetched order list successfully`);
           expect(typeof res.body.data).eq('object');
         });
+      done();
     });
 
-    it('logged in user can fetch specific order', () => {
+    it('logged in user can fetch specific order', done => {
       spoofOrders();
 
       const id = 3;
@@ -170,9 +182,10 @@ describe('Activity flow:', () => {
           expect(typeof res.body.data).eq('object');
           expect(res.body.data.id).eq(id);
         });
+      done();
     });
 
-    it('logged in user should not fetch non-existent order', () => {
+    it('logged in user should not fetch non-existent order', done => {
       const id = 32;
 
       chai
@@ -182,14 +195,16 @@ describe('Activity flow:', () => {
           expect(res.status).eq(404);
           expect(res.body.message).eq(`no order found`);
         });
+      done();
     });
 
     describe('Order states:', () => {
-      it('orders should be pending by default', () => {
+      it('orders should be pending by default', done => {
         expect(orders.findById(1).status).eq('pending');
+        done();
       });
 
-      it('order states cannot be mutated by unprivileged users', () => {
+      it('order states cannot be mutated by unprivileged users', done => {
         const id = 1;
 
         ['completed', 'confirmed', 'declined'].map(x => {
@@ -204,9 +219,10 @@ describe('Activity flow:', () => {
               );
             });
         });
+        done();
       });
 
-      it('order states should not be incorrectly mutated by unprivileged user', () => {
+      it('order states should not be incorrectly mutated by unprivileged user', done => {
         const id = 1;
 
         ['complete', 'confirm', 'decline'].map(x => {
@@ -221,92 +237,7 @@ describe('Activity flow:', () => {
               );
             });
         });
-      });
-    });
-
-    describe('logout', () => {
-      it('User can logout', () => {
-        chai
-          .request(server)
-          .get(`${ROOT_URL}/users/logout`)
-          .end((err, res) => {
-            expect(res.status).eq(204);
-            expect(user.details).eq(undefined);
-          });
-      });
-    });
-  });
-
-  describe('Admin user', () => {
-    it('Admin exists', () => {
-      expect(Boolean(users.findByProp('isAdmin'))).eq(true);
-    });
-
-    it('Admin can login', () => {
-      ['username', 'password'].map(x => {
-        chai
-          .request(server)
-          .post(`${ROOT_URL}/users/login`)
-          .send(
-            Object.assign(
-              {},
-              {
-                username: 'admin',
-                password: 'admin'
-              },
-              {
-                [x]: undefined
-              }
-            )
-          )
-          .end((err, res) => {
-            expect(res.status).eq(400);
-            expect(res.body.errors instanceof Array).eq(true);
-          });
-      });
-    });
-
-    it('Admin can login', () => {
-      chai
-        .request(server)
-        .post(`${ROOT_URL}/users/login`)
-        .send({
-          username: 'admin',
-          password: 'admin'
-        })
-        .end((err, res) => {
-          expect(res.status).eq(200);
-          expect(res.body.message).eq(`successful login as admin user`);
-        });
-    });
-
-    it('order states can be mutated correctly by admin', () => {
-      const id = 1;
-
-      ['completed', 'confirmed', 'declined'].map(x => {
-        chai
-          .request(server)
-          .put(`${ROOT_URL}/orders/${id}`)
-          .send({ status: x })
-          .end((err, res) => {
-            expect(res.status).eq(200);
-            expect(res.body.message).eq(`order #${id} has been marked as ${x}`);
-          });
-      });
-    });
-
-    it('order states should not be incorrectly mutated by admin', () => {
-      const id = 1;
-
-      ['complete', 'confirm', 'decline'].map(x => {
-        chai
-          .request(server)
-          .put(`${ROOT_URL}/orders/${id}`)
-          .send({ status: x })
-          .end((err, res) => {
-            expect(res.status).eq(500);
-            expect(res.body.message).eq(`cannot parse invalid status "${x}" `);
-          });
+        done();
       });
     });
   });

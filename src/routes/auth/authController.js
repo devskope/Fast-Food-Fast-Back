@@ -133,31 +133,4 @@ const userLogin = (req, res) => {
   }
 };
 
-const redirectAuthPages = (req, res) => {
-  if (!req.user.anonymous) {
-    res.status(307).json({
-      success: true,
-      location: `${req.headers.host + ROOT_URL}/menu`,
-      message: `already logged in as ${req.user.details.username}`
-    });
-  } else {
-    res.status(200).json({
-      success: true
-    });
-  }
-};
-
-const userLogout = (req, res) => {
-  if (!req.user.anonymous) {
-    delete user.details;
-    user.anonymous = true;
-    res.status(204).end();
-  } else {
-    res.status(200).json({
-      success: true,
-      message: `not logged in`
-    });
-  }
-};
-
-export default { createUser, userLogin, redirectAuthPages, userLogout };
+export default { createUser, userLogin };
