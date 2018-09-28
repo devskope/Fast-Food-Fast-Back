@@ -1,12 +1,24 @@
 import Order from '../../models/orders';
 import orders from '../../datastores/orderData';
-import checkRequired from '../../helpers/order_field_helpers';
 
 const createOrder = (req, res) => {
   const { category, name, qty, ...extras } = req.body;
-  const errors = [];
 
-  checkRequired(req, errors);
+  const errors = [];
+  ['category', 'name', 'qty'].map(field => {
+    if (req.body[field] === undefined) {
+      errors.push({
+        category: 'validation',
+        message: `misssing required "${field}" field`
+      });
+    }
+  });
+  if (typeof JSON.parse(qty) !== 'number') {
+    errors.push({
+      category: 'validation',
+      message: `qty should be a number`
+    });
+  }
 
   if (errors.length > 0) {
     res.status(400).json({
@@ -14,7 +26,12 @@ const createOrder = (req, res) => {
       errors
     });
   } else {
-    const newOrder = new Order({ category, name, qty, ...extras });
+    const newOrder = new Order({
+      category,
+      name,
+      qty,
+      ...extras
+    });
     newOrder.save();
 
     res.status(201).json({

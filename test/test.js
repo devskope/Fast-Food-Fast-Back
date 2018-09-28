@@ -71,6 +71,16 @@ describe('Activity flow:', () => {
           });
       });
     });
+    it('Should not register new user with invalid email', () => {
+      chai
+        .request(server)
+        .post(`${ROOT_URL}/users/register`)
+        .send(Object.assign({}, newUser, { email: 'ropsten.io' }))
+        .end((err, res) => {
+          expect(res.status).eq(400);
+          expect(res.body.errors instanceof Array).eq(true);
+        });
+    });
 
     it('Should register new user', () => {
       chai
@@ -115,19 +125,6 @@ describe('Activity flow:', () => {
             `successful login as ${newUser.username}`
           );
         });
-    });
-
-    it('Logged in user should not create an invalid order', () => {
-      ['category', 'name', 'qty'].map(field => {
-        chai
-          .request(server)
-          .post(`${ROOT_URL}/orders`)
-          .send(Object.assign({}, orderToMake, { [field]: undefined }))
-          .end((err, res) => {
-            expect(res.status).eq(400);
-            expect(res.body.errors instanceof Array).eq(true);
-          });
-      });
     });
 
     it('logged in user can create a valid order', () => {
