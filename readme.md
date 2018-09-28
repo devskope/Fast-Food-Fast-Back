@@ -1,39 +1,32 @@
 [![Build Status](https://travis-ci.org/ope-oguntoye/Fast-Food-Fast-Back.svg?branch=develop)](https://travis-ci.org/ope-oguntoye/Fast-Food-Fast-Back)  &nbsp; &nbsp; &nbsp;    [![codecov](https://codecov.io/gh/ope-oguntoye/Fast-Food-Fast-Back/branch/develop/graph/badge.svg)](https://codecov.io/gh/ope-oguntoye/Fast-Food-Fast-Back)
 
 
-## Fast-Food-Fast-Back 
-Back-end app exposing API endpoints  to Fast-Food-Fast front-end clients
-
-##  [> documentation  <](https://github.com/ope-oguntoye/Fast-Food-Fast-Back/tree/develop/docs/doc.md)
-
-# Description
-
+### Description
 [**Fast-Food-Fast-Back**](https://fast-food-fast-server.herokuapp.com/api/v1) is the backend application for _**Fast-Food-Fast**_, an application that allows placement, acceptance/rejection and/or confirmation of meal orders.
 
+## Features
+Currently, this API provisions the following features:
+ - Registration
+ - Login
+ - Order creation
+ - Order fetching
+ - Specific order Fetching
+ - Order status mutation
+## To set this project up locally
+* Clone this repo and change into the directory:
+ `$ git clone https://github.com/ope-oguntoye/Fast-Food-Fast-Back.git && cd Fast-Food-Fast-Back`
 
-## Local Setup and testing
-```
-$ git clone https://github.com/ope-oguntoye/Fast-Food-Fast-Back.git && cd Fast-Food-Fast-Back
+* Install the dependencies:  `npm i`
 
-$ npm i
+* Create .env file with environment variables in root folder:
+`$ echo "PORT=3000" >> .env`
 
-$ echo "PORT='port to listen on'" >> .env   // ex: PORT=3000
+* Start the development server: `npm run devstart`
 
-
-$ npm run devstart  // start development server
-
-$ npm test // test
-
-```
-To manualy test endpoints in deveplopment with [Postman](https://getpostman.com):
-
-- Import the [postman dev collection](https://github.com/ope-oguntoye/Fast-Food-Fast-Back/tree/develop/utils/fff-dev.postman_collection.json) into postman.
-- start the development server (_on `port 3000`_)
-- Send requests using postman
+## Testing
+* To run the tests, run `npm test`
 
 
-
-#
 ### Dependencies
 
 - [NodeJS](https://github.com/nodejs/node) - A JavaScript runtime environment
@@ -44,4 +37,4 @@ To manualy test endpoints in deveplopment with [Postman](https://getpostman.com)
 - [Mocha](https://github.com/mochajs/mocha) - Simple, flexible, fun javascript test framework for node.js & the browser
 - [Chai](https://github.com/chaijs/chai) - BDD / TDD assertion framework for node.js and the browser that can be paired with any testing framework
 - [Istanbul](https://github.com/istanbuljs) - Yet another JS code coverage tool that computes statement, line, function and branch coverage
-- [Showdown](https://github.com/showdownjs/showdown) - A bidirectional MD to HTML to MD converter written in Javascript 
+
