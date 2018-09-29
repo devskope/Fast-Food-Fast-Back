@@ -38,10 +38,11 @@
     "build": "babel src -d dist --source-maps",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "devstart": "DEBUG=ff* nodemon src/server --exec babel-node",
+    "initdb": "DEBUG=ff* babel-node src/datastores/db_init",
     "precommit": "lint-staged",
     "heroku-postbuild": "npm run build",
     "start": "node dist/server",
-    "test": "nyc --reporter=lcov --reporter=text mocha test/*.js --exit"
+    "test": "DEBUG=ff* nyc --reporter=lcov --reporter=text mocha test/*.js --exit"
   },
   "nyc": {
     "require": [
