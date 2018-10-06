@@ -1,21 +1,18 @@
-import { jsonParse } from '../../helpers/jsonParse';
-
 export default (req, res, next) => {
-  const { qty } = req.body;
   const errors = [];
-  ['category', 'name', 'qty'].map(field => {
+  ['username', 'password'].map(field => {
     if (req.body[field] === undefined) {
       errors.push({
         category: 'validation',
-        message: `misssing required "${field}" field`
+        message: `misssing required ${field} field`
       });
     }
   });
 
-  if (typeof jsonParse(qty) !== 'number') {
+  if (req.body.email && !/(.*)@(.*)\.(.*)/.test(req.body.email)) {
     errors.push({
       category: 'validation',
-      message: `qty should be a number`
+      message: 'invalid email format'
     });
   }
 
