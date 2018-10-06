@@ -73,21 +73,6 @@ export default (ROOT_URL, server, chai, expect, logger) => {
       done();
     });
 
-    it('Should save user to datastore', done => {
-      User.findByUsername(newUser.username).then(user => {
-        expect(user.username).eq(newUser.username);
-        done();
-      });
-    });
-
-    it('User password should be obfuscated', done => {
-      User.findByUsername(newUser.username).then(user => {
-        const userPass = user.password;
-        expect(userPass).not.eq(newUser.password);
-        done();
-      });
-    });
-
     it('Registered should not login with missing requirements', done => {
       ['username', 'password'].forEach(x => {
         chai
@@ -124,8 +109,8 @@ export default (ROOT_URL, server, chai, expect, logger) => {
           expect(res.body.message).eq(
             `successful login as ${newUser.username}`
           );
+          done();
         });
-      done();
     });
 
     describe('Existing user', () => {
