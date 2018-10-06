@@ -3,7 +3,7 @@ export const jsonParse = arg => {
   try {
     parsed = JSON.parse(arg);
   } catch (e) {
-    console.log(e);
+    return null;
   }
   return parsed;
 };
