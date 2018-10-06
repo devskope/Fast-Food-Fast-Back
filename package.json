@@ -42,7 +42,7 @@
     "precommit": "lint-staged",
     "heroku-postbuild": "npm run build",
     "start": "node dist/server",
-    "test": "DEBUG=ff* nyc --reporter=lcov --reporter=text mocha test/*.js --exit"
+    "test": "DEBUG=ff* nyc --reporter=lcov --reporter=text mocha test/index.js --exit"
   },
   "nyc": {
     "require": [
