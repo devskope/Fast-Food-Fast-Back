@@ -25,12 +25,6 @@ export default (ROOT_URL, server, chai, expect, logger) => {
            username VARCHAR UNIQUE not null,
            password VARCHAR not null
           )`);
-      await new User({
-        username: 'admin',
-        password:
-          '$2a$10$4DhhXb8vXCMh/Xf1p3VuzeFdBqzJJkCwwhTXE55PLpYrkeuNQQci6',
-        email: 'max@fff.chow'
-      }).save(0);
     });
 
     it('Should not register new user with missing reqirements', done => {
@@ -69,8 +63,8 @@ export default (ROOT_URL, server, chai, expect, logger) => {
           expect(body.message).eq(
             `user ${newUser.username} registered successfully`
           );
+          done();
         });
-      done();
     });
 
     it('Registered should not login with missing requirements', done => {
