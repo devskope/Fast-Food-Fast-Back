@@ -25,7 +25,7 @@ const Models = {
        owner    VARCHAR not null,
        status   VARCHAR not null,
        name     VARCHAR not null,
-       qty      VARCHAR not null,
+       qty      INTEGER not null,
        category VARCHAR not null,
        topping  VARCHAR
       )`
