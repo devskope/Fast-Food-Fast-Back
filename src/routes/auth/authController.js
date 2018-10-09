@@ -1,5 +1,8 @@
+import jsonwebtoken from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import User from '../../models/users';
+
+const { env } = process;
 
 const createUser = (req, res) => {
   User.findByUsername(req.body.username).then(user => {
@@ -37,8 +40,7 @@ const createUser = (req, res) => {
                 res.status(201).json({
                   success: true,
                   createSuccess,
-                  message: `user ${newUser.username} registered successfully`,
-                  user: u
+                  message: `user ${newUser.username} registered successfully`
                 });
               });
             }
@@ -54,16 +56,27 @@ const userLogin = (req, res) => {
     .then(user => {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         delete user.password; // eslint-disable-line no-param-reassign
+        const token = jsonwebtoken.sign(
+          {
+            id: user.id,
+            is_admin: user.is_admin,
+            username: user.username
+          },
+          env.JWT_SECRET,
+          { expiresIn: '7d' }
+        );
         if (user.is_admin) {
           res.status(200).json({
             success: true,
             message: `successful login as Admin user`,
+            token,
             user
           });
         } else {
           res.status(200).json({
             success: true,
             message: `successful login as ${user.username}`,
+            token,
             user
           });
         }
