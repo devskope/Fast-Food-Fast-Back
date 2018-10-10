@@ -1,6 +1,6 @@
 export default (req, res, next) => {
   const errors = [];
-  ['username', 'password'].map(field => {
+  ['username', 'password'].forEach(field => {
     if (req.body[field] === undefined) {
       errors.push({
         category: 'validation',
