@@ -5,13 +5,13 @@ const logger = debug('fff:order-db');
 logger(`db connector....`);
 
 class Order {
-  constructor({ name, qty = 1, category, ...extras }) {
+  constructor({ name, qty, category, ...extras }) {
     this.name = name;
     this.category = category;
     this.qty = qty;
     this.status = 'pending';
     this.owner = 'owner';
-
+    /* istanbul ignore next */
     if (this.category === 'pizza') {
       this.topping = { ...extras }.topping || `pepperoni`;
     }

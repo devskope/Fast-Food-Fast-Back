@@ -16,7 +16,6 @@ export default (ROOT_URL, server, chai, expect, logger) => {
         chai
           .request(server)
           .get(`${ROOT_URL}/orders`)
-          // .set('fff-auth', authToken)
           .end((err, { status, body }) => {
             expect(status).eq(401);
             expect(body.message).eq(`Unauthorized! No token provided.`);
@@ -211,7 +210,6 @@ export default (ROOT_URL, server, chai, expect, logger) => {
           .send({ status: 'completed' })
           .set('fff-auth', authToken)
           .end((err, { status, body }) => {
-            logger(body);
             expect(status).eq(401);
             expect(body.message).eq(
               `You have insufficient privileges to access the requested content`

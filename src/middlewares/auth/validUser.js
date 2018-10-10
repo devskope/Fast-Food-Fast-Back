@@ -1,19 +1,12 @@
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import env from '../../config/envConf';
 import User from '../../models/users';
-
-const { env } = process;
-
-/* istanbul ignore if */
-if (!env.NODE_ENV) {
-  dotenv.config();
-}
 
 const verifyToken = token =>
   new Promise((resolve, reject) => {
     try {
       const decoded = jwt.verify(token, env.JWT_SECRET);
-      if (decoded) resolve(decoded);
+      resolve(decoded);
     } catch (error) {
       reject(error);
     }
@@ -35,7 +28,7 @@ export default (req, res, next) => {
             req.user = user;
             next();
           })
-          .catch(err =>     // eslint-disable-line
+          .catch(() =>
             res.status(400).json({
               success: false,
               message: `Ooops something happened, can't find User`

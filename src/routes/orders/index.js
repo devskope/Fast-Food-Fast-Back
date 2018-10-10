@@ -1,10 +1,10 @@
-import express from 'express';
+import { Router } from 'express';
 import controllers from './orderController';
 import validateParams from '../../middlewares/orders/validateParams';
 import validUser from '../../middlewares/auth/validUser';
 import onlyAdmin from '../../middlewares/auth/onlyAdmin';
 
-const router = express.Router();
+const router = new Router();
 
 router.get('/:id', validUser, controllers.getSingleOrder);
 router.get('/', validUser, controllers.getOrders);

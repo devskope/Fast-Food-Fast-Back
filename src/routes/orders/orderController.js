@@ -71,7 +71,7 @@ const updateOrder = (req, res) => {
         });
       }
     })
-    .catch(noOrder => {  // eslint-disable-line
+    .catch(() => {
       res.status(404).json({
         success: false,
         message: `order #${id} not found`

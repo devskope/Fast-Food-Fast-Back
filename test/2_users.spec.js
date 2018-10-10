@@ -87,6 +87,7 @@ export default (ROOT_URL, server, chai, expect, logger) => {
         .post(`${ROOT_URL}/auth/login`)
         .send({ ...newUser, ...{ password: 'incorrect' } })
         .end((err, { status, body }) => {
+          logger(status, body);
           expect(status).eq(400);
           expect(body.message).eq('password incorrect');
           done();
